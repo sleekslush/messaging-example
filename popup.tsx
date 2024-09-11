@@ -1,24 +1,18 @@
+import { sendToBackground } from "@plasmohq/messaging"
 import { useState } from "react"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
+  const [response, setResponse] = useState("")
+  
+  const sendMessage = async () => {
+    const response = await sendToBackground({ name: "send-to-content", body: { message: "Hello from popup" } })
+    setResponse(response)
+  }
 
   return (
-    <div
-      style={{
-        padding: 16
-      }}>
-      <h2>
-        Welcome to your{" "}
-        <a href="https://www.plasmo.com" target="_blank">
-          Plasmo
-        </a>{" "}
-        Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
+    <div>
+      <button onClick={sendMessage}>Click me</button>
+      <div><span>{response}</span></div>
     </div>
   )
 }
